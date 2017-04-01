@@ -30,7 +30,7 @@ public class bottle_behavior : MonoBehaviour {
 
 		while (rotationDiff == 0 && isRotating == true) {
 			isRotating = false;
-			Debug.Log ("Rotated with: " + degreesMoved);
+			Debug.Log ("Rotated with: " + (int)degreesMoved);
 			List.Clear ();
 			degreesMoved = 0;
 			rotationDiff = 1;
@@ -40,8 +40,7 @@ public class bottle_behavior : MonoBehaviour {
 		oldRotation = rb.transform.eulerAngles.x;
 	}
 
-	public float SumArray(float[] toBeSummed)
-	{
+	public float SumArray(float[] toBeSummed){
 		float sum = 0;
 		foreach (float item in toBeSummed){
 			sum += item;

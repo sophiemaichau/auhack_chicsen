@@ -15,16 +15,12 @@ void loop() {
   colonBool = false;
   while (Serial.available()) {
     byte imed = Serial.read();
-       if(imed == '1'){
+       if(imed != '0'){
+          rotateAmount(0,imed);
           imed = '0';
-          rotateAmount(0,360);
           myservo.write(90);
-          delay(2000);
+          break;
         }
-        if(digitalRead(7) == 0){
-            rotateAmount(1,360);
-            delay(300);
-          }
   }
 }
 

@@ -12,7 +12,7 @@ public class serial_communication : MonoBehaviour {
 	SerialPort port;
 	bool isRotating = false;
 	List<float> List = new List<float>();
-	float max;
+	float degreesMoved;
 
 	// Use this for initialization
 	void Start (){
@@ -33,18 +33,22 @@ public class serial_communication : MonoBehaviour {
 			rotation = rb.transform.eulerAngles.x;
 			rotationDiff = Mathf.Abs (oldRotation - rotation);
 
-			if (rotationDiff > 0 && rotationDiff < 180) {
+			if (rotationDiff > 1 && rotationDiff < 300) {
 				isRotating = true;
 				List.Add (rotationDiff);
-				max = Mathf.Max (List.ToArray ());
-				rotationDiff = 0;
+				degreesMoved = SumArray(List.ToArray());
+			}
 
-			} else if (rotationDiff == 0 && isRotating == true) {
+			while (rotationDiff == 0 && isRotating == true) {
 				isRotating = false;
-				WriteToArduino ("1");
-				Debug.Log ("Rotated with: " + max);
+				int degreesInt = (int)degreesMoved;
+				string degreesString = degreesInt.ToString ();
+				Debug.Log ("Rotated with: " + degreesString);
+				WriteToArduino (degreesString);
 				List.Clear ();
-				max = 0;
+				degreesMoved = 0;
+				rotationDiff = 1;
+				break;
 			}
 
 			oldRotation = rb.transform.eulerAngles.x;
@@ -54,5 +58,13 @@ public class serial_communication : MonoBehaviour {
 	public void WriteToArduino(string message){
 		port.WriteLine(message);
 		port.BaseStream.Flush();
+	}
+
+	public float SumArray(float[] toBeSummed){
+		float sum = 0;
+		foreach (float item in toBeSummed){
+			sum += item;
+		}
+		return sum;
 	}
 }
