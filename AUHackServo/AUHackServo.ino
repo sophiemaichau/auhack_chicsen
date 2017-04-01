@@ -1,17 +1,10 @@
-/*
- Controlling a servo position using a potentiometer (variable resistor)
- by Michal Rinott <http://people.interaction-ivrea.it/m.rinott>
-
- modified on 8 Nov 2013
- by Scott Fitzgerald
- http://www.arduino.cc/en/Tutorial/Knob
-*/
-
 #include <Servo.h>
 
 Servo myservo;  // create servo object to control a servo
 
 double timePerRound = 1050;
+String incomingByte;
+bool colonBool = false;
 
 void setup() {
   myservo.attach(13);  // attaches the servo on pin 9 to the servo object
@@ -19,25 +12,20 @@ void setup() {
 }
 
 void loop() {
-   // scale it to use it with the servo (value between 0 and 180)
-  
-  if (Serial.available() > 0) 
-    {
-          byte incomingByte = Serial.read();
-
-          Serial.print("I received: ");
-          Serial.println(incomingByte, DEC);
-          
-          rotateAmount(1,360);
-    }
-  
-  if(digitalRead(7) == 0){
-      rotateAmount(1,360);
-      delay(300);
-    }
-  myservo.write(90);
-
-  // waits for the servo to get there
+  colonBool = false;
+  while (Serial.available()) {
+    byte imed = Serial.read();
+       if(imed == '1'){
+          imed = '0';
+          rotateAmount(0,360);
+          myservo.write(90);
+          delay(2000);
+        }
+        if(digitalRead(7) == 0){
+            rotateAmount(1,360);
+            delay(300);
+          }
+  }
 }
 
 void rotateAmount(int way, double degree){
@@ -48,6 +36,7 @@ void rotateAmount(int way, double degree){
       }
 
     delay(calcDelay(degree));
+    myservo.write(90);
   } 
 
 double calcDelay(double degree){
