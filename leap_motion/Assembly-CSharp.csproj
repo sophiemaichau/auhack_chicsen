@@ -173,8 +173,10 @@
      <Compile Include="Assets\OVR\Scripts\Util\OVRSceneSampleController.cs" />
      <Compile Include="Assets\OVR\Scripts\Util\OVRScreenFade.cs" />
      <Compile Include="Assets\OVR\Scripts\Util\OVRTrackerBounds.cs" />
-     <Compile Include="Assets\Scripts\bottle_behavior.cs" />
-     <Compile Include="Assets\Scripts\serial_communication.cs" />
+     <Compile Include="Assets\Scripts\left_bottle_behavior.cs" />
+     <Compile Include="Assets\Scripts\left_serial_communication.cs" />
+     <Compile Include="Assets\Scripts\right_bottle_behavior.cs" />
+     <Compile Include="Assets\Scripts\right_serial_communication.cs" />
      <None Include="Assets\Plugins\donotdelete.txt" />
      <None Include="Assets\LeapMotion\Materials\Sources\Shaders\Toony-Basic.shader" />
      <None Include="Assets\LeapMotion\Resources\LeapCG.cginc" />
